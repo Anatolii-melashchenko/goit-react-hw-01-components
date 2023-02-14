@@ -1,17 +1,14 @@
 import { Box } from 'components/Box';
+import FriendListItem from 'components/FriendListItem/FriendListItem';
 import PropTypes from 'prop-types';
-import { Avatar, Name, StatsEl, Status } from './FriendList.styled';
+import { StatsEl } from './FriendList.styled';
 
-export default function FriendList(props) {
-  const { friends } = props;
-
+export default function FriendList({ friends }) {
   return (
     <Box as="ul" mb="10px">
-      {friends.map(({ id, avatar, name, isOnline }) => (
-        <StatsEl key={id}>
-          <Status isOnline={isOnline}>{isOnline}</Status>
-          <Avatar src={avatar} alt="User avatar" />
-          <Name>{name}</Name>
+      {friends.map(friend => (
+        <StatsEl key={friend.id}>
+          <FriendListItem friend={friend} />
         </StatsEl>
       ))}
     </Box>
@@ -22,9 +19,6 @@ FriendList.propTypes = {
   friends: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      avatar: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      isOnline: PropTypes.bool.isRequired,
-    })
-  ),
+    }).isRequired
+  ).isRequired,
 };
